@@ -4,6 +4,53 @@
 
 A full-stack professional lending platform that evaluates loan applications against a centralized lending policy. It provides a React dashboard to submit new loan applications, review the latest decisions, and browse historical applications with real-time portfolio statistics.
 
+
+## Setup Instructions
+
+### Backend Startup
+
+1. Open a terminal in the root directory and navigate to the backend API folder:
+   ```bash
+   cd backend/LendingPlatform.Api
+   ```
+2. Restore packages and build:
+   ```bash
+   dotnet restore
+   dotnet build
+   ```
+3. Run the API:
+   ```bash
+   dotnet run
+   ```
+   *Note: In the Development environment, EF Core migrations are applied automatically on startup. The API will start on `http://localhost:5207`.*
+4. Access Swagger UI: [http://localhost:5207/swagger](http://localhost:5207/swagger)
+
+### Frontend Startup
+
+1. Open a new terminal in the root directory and navigate to the frontend folder:
+   ```bash
+   cd frontend/lending-platform-client
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   *The frontend will start on `http://localhost:5173`.*
+
+### Test Commands
+
+To run the comprehensive test suite (Unit tests + In-Memory Integration tests):
+
+```bash
+cd backend/LendingPlatform.Tests
+dotnet test
+```
+
+
 ## Features
 
 - **Automated Decision Engine**: Evaluates applications instantly based on loan amount, asset value, credit score, and calculated LTV (Loan-to-Value).
@@ -75,51 +122,6 @@ lending-platform/
 ```
 
 See [docs/architecture.md](docs/architecture.md) for more details.
-
-## Setup Instructions
-
-### Backend Startup
-
-1. Open a terminal in the root directory and navigate to the backend API folder:
-   ```bash
-   cd backend/LendingPlatform.Api
-   ```
-2. Restore packages and build:
-   ```bash
-   dotnet restore
-   dotnet build
-   ```
-3. Run the API:
-   ```bash
-   dotnet run
-   ```
-   *Note: In the Development environment, EF Core migrations are applied automatically on startup. The API will start on `http://localhost:5207`.*
-4. Access Swagger UI: [http://localhost:5207/swagger](http://localhost:5207/swagger)
-
-### Frontend Startup
-
-1. Open a new terminal in the root directory and navigate to the frontend folder:
-   ```bash
-   cd frontend/lending-platform-client
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-   *The frontend will start on `http://localhost:5173`.*
-
-### Test Commands
-
-To run the comprehensive test suite (Unit tests + In-Memory Integration tests):
-
-```bash
-cd backend/LendingPlatform.Tests
-dotnet test
-```
 
 ## API Endpoints
 
