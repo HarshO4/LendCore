@@ -1,0 +1,6 @@
+@LendingPlatform.Api_HostAddress = http://localhost:5036
+
+GET {{LendingPlatform.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

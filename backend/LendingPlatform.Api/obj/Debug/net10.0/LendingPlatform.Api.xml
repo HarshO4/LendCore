@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LendingPlatform.Api</name>
+    </assembly>
+    <members>
+        <member name="T:LendingPlatform.Api.Controllers.ApplicationsController">
+            <summary>
+            Handles loan application submissions and retrieval.
+            </summary>
+        </member>
+        <member name="M:LendingPlatform.Api.Controllers.ApplicationsController.SubmitApplication(LendingPlatform.Api.Models.DTOs.CreateApplicationRequest,System.Threading.CancellationToken)">
+            <summary>
+            Submit a loan application and receive the lending decision.
+            Valid applications (approved or declined) are persisted.
+            Invalid inputs return HTTP 400 and are NOT persisted.
+            </summary>
+            <param name="request">Loan application details.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>The loan decision with all relevant details.</returns>
+        </member>
+        <member name="M:LendingPlatform.Api.Controllers.ApplicationsController.GetApplications(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Retrieve all persisted loan applications, newest first.
+            </summary>
+            <param name="decision">
+            Optional filter: "Approved" or "Declined".
+            Omit to return all applications.
+            </param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>List of loan applications.</returns>
+        </member>
+        <member name="T:LendingPlatform.Api.Controllers.StatisticsController">
+            <summary>
+            Returns portfolio statistics calculated from persisted application data.
+            </summary>
+        </member>
+        <member name="M:LendingPlatform.Api.Controllers.StatisticsController.GetStatistics(System.Threading.CancellationToken)">
+            <summary>
+            Retrieve portfolio statistics across all persisted applications.
+            </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>Aggregate portfolio statistics.</returns>
+        </member>
+        <member name="T:LendingPlatform.Api.Data.ApplicationDbContext">
+            <summary>
+            EF Core database context for the lending platform.
+            </summary>
+        </member>
+        <member name="T:LendingPlatform.Api.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:LendingPlatform.Api.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:LendingPlatform.Api.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:LendingPlatform.Api.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:LendingPlatform.Api.Models.DTOs.ApplicationResponse">
+            <summary>
+            Response body returned after a loan application is evaluated and persisted.
+            </summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.DTOs.ApplicationResponse.Ltv">
+            <summary>
+            LTV as a percentage value (e.g. 50.00 means 50 %).
+            </summary>
+        </member>
+        <member name="T:LendingPlatform.Api.Models.DTOs.CreateApplicationRequest">
+            <summary>
+            Request body for submitting a new loan application.
+            </summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.DTOs.CreateApplicationRequest.LoanAmount">
+            <summary>Requested loan amount in GBP. Must be greater than 0.</summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.DTOs.CreateApplicationRequest.AssetValue">
+            <summary>Value of the asset used as security in GBP. Must be greater than 0.</summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.DTOs.CreateApplicationRequest.CreditScore">
+            <summary>Applicant credit score. Must be between 1 and 999 inclusive.</summary>
+        </member>
+        <member name="T:LendingPlatform.Api.Models.DTOs.StatisticsResponse">
+            <summary>
+            Portfolio statistics derived from all persisted applications.
+            </summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.DTOs.StatisticsResponse.TotalApplicants">
+            <summary>Total number of valid persisted applications.</summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.DTOs.StatisticsResponse.ApprovedCount">
+            <summary>Number of approved applications.</summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.DTOs.StatisticsResponse.DeclinedCount">
+            <summary>Number of declined applications.</summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.DTOs.StatisticsResponse.TotalValueOfApprovedLoans">
+            <summary>Sum of loan amounts for approved applications only.</summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.DTOs.StatisticsResponse.AverageLtv">
+            <summary>
+            Average LTV across ALL valid persisted applications (approved and declined).
+            Null when the database is empty.
+            </summary>
+        </member>
+        <member name="T:LendingPlatform.Api.Models.Entities.LoanApplication">
+            <summary>
+            Persisted loan application record.
+            </summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.Entities.LoanApplication.LoanAmount">
+            <summary>Requested loan amount in GBP.</summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.Entities.LoanApplication.AssetValue">
+            <summary>Value of the asset used as security in GBP.</summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.Entities.LoanApplication.CreditScore">
+            <summary>Applicant credit score (1–999).</summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.Entities.LoanApplication.Ltv">
+            <summary>
+            Loan-to-Value ratio stored as a percentage value.
+            E.g. 50 means 50 %, not 0.50.
+            </summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.Entities.LoanApplication.Decision">
+            <summary>"Approved" or "Declined".</summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.Entities.LoanApplication.DecisionReason">
+            <summary>Human-readable explanation of the decision.</summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.Entities.LoanApplication.RuleApplied">
+            <summary>Concise label for the rule that determined the outcome.</summary>
+        </member>
+        <member name="P:LendingPlatform.Api.Models.Entities.LoanApplication.CreatedAt">
+            <summary>UTC timestamp when the application was created.</summary>
+        </member>
+        <member name="T:LendingPlatform.Api.Models.Results.LoanDecisionResult">
+            <summary>
+            The outcome of evaluating a loan application against the lending policy.
+            </summary>
+        </member>
+        <member name="T:LendingPlatform.Api.Policy.LendingPolicy">
+            <summary>
+            Centralised lending policy constants.
+            All business-rule thresholds live here so that no magic numbers
+            are scattered across service or test code.
+            </summary>
+        </member>
+        <member name="T:LendingPlatform.Api.Services.Interfaces.ILoanDecisionService">
+            <summary>
+            Evaluates a loan application against the lending policy and returns a decision.
+            The service is pure (no I/O) so it can be tested without any infrastructure.
+            </summary>
+        </member>
+        <member name="M:LendingPlatform.Api.Services.Interfaces.ILoanDecisionService.Evaluate(System.Decimal,System.Decimal,System.Int32)">
+            <summary>
+            Evaluate the supplied inputs and return the lending decision.
+            </summary>
+            <param name="loanAmount">Requested loan amount in GBP.</param>
+            <param name="assetValue">Security asset value in GBP.</param>
+            <param name="creditScore">Applicant credit score (1–999).</param>
+            <returns>
+            A <see cref="T:LendingPlatform.Api.Models.Results.LoanDecisionResult"/> containing the LTV, the decision,
+            a human-readable reason, and the rule label.
+            </returns>
+        </member>
+        <member name="T:LendingPlatform.Api.Services.Interfaces.IStatisticsService">
+            <summary>
+            Computes portfolio statistics from persisted application data.
+            </summary>
+        </member>
+        <member name="M:LendingPlatform.Api.Services.Interfaces.IStatisticsService.GetStatisticsAsync(System.Threading.CancellationToken)">
+            <summary>
+            Return aggregate statistics for all valid persisted applications.
+            </summary>
+        </member>
+        <member name="T:LendingPlatform.Api.Services.LoanDecisionService">
+             <summary>
+             Implements the lending policy rules and produces a loan decision.
+            
+             Rule evaluation order:
+               1. Minimum loan amount
+               2. Maximum loan amount
+               3. High-value loan (≥ £1,000,000)
+               4. Standard loan bands (LTV-based)
+            
+             LTV is calculated as (LoanAmount / AssetValue) × 100 and stored as a
+             percentage value (e.g. 50 represents 50 %).
+             The unrounded value is used for all rule comparisons.
+             </summary>
+        </member>
+        <member name="T:LendingPlatform.Api.Services.StatisticsService">
+            <summary>
+            Computes portfolio statistics from all persisted applications.
+            Average LTV covers both approved and declined applications.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type)">
+            <summary>
+            Generates a documentation comment ID for a type.
+            Example: T:Namespace.Outer+Inner`1 becomes T:Namespace.Outer.Inner`1
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Reflection.PropertyInfo)">
+            <summary>
+            Generates a documentation comment ID for a property.
+            Example: P:Namespace.ContainingType.PropertyName or for an indexer P:Namespace.ContainingType.Item(System.Int32)
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type,System.String)">
+            <summary>
+            Generates a documentation comment ID for a property given its container type and property name.
+            Example: P:Namespace.ContainingType.PropertyName
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Reflection.MethodInfo)">
+            <summary>
+            Generates a documentation comment ID for a method (or constructor).
+            For example:
+              M:Namespace.ContainingType.MethodName(ParamType1,ParamType2)~ReturnType
+              M:Namespace.ContainingType.#ctor(ParamType)
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.GetTypeDocId(System.Type,System.Boolean,System.Boolean)">
+            <summary>
+            Generates a documentation ID string for a type.
+            This method handles nested types (replacing '+' with '.'),
+            generic types, arrays, pointers, by-ref types, and generic parameters.
+            The <paramref name="includeGenericArguments"/> flag controls whether
+            constructed generic type arguments are emitted, while <paramref name="omitGenericArity"/>
+            controls whether the generic arity marker (e.g. "`1") is appended.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.NormalizeDocId(System.String)">
+            <summary>
+            Normalizes a documentation comment ID to match the compiler-style format.
+            Strips the return type suffix for ordinary methods but retains it for conversion operators.
+            </summary>
+            <param name="docId">The documentation comment ID to normalize.</param>
+            <returns>The normalized documentation comment ID.</returns>
+        </member>
+    </members>
+</doc>
