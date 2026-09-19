@@ -145,15 +145,8 @@ See [docs/business-rules.md](docs/business-rules.md) for a complete breakdown of
 
 ## Screenshots
 
-To verify the UI, run the application and capture the following elements:
-- **LendCore dashboard**: Displays the clean stats cards and layout.
-- **Approved decision**: The success card showcasing rules applied and LTV formatting.
-- **Declined decision**: The failure card showing the boundary failure message.
-- **Application history**: The table with expandable detailed rows.
-- **Lending Policy section**: The informational toggle containing business rules.
-- **Swagger API**: Viewable at `http://localhost:5207/swagger`.
+<img width="1897" height="867" alt="image" src="https://github.com/user-attachments/assets/81b310fd-2e7d-4fea-9069-785f8f839ed1" />
+<img width="1906" height="862" alt="image" src="https://github.com/user-attachments/assets/5f414aa1-1407-493c-bdc8-29bd7ca590aa" />
+<img width="1491" height="617" alt="image" src="https://github.com/user-attachments/assets/a582adf5-261e-484c-bef2-6a371c181eca" />
 
-## Known Limitations
 
-- The history table currently renders all persisted rows. For a massive production system, backend pagination would be implemented.
-- Authentication and User roles are explicitly out of scope for this focused decision-engine prototype.
